@@ -1,7 +1,6 @@
 ﻿// Learn more about F# at http://fsharp.net
 open System
 open Solve
-open System.Windows.Forms
 
 let payments plan d c =
     let back =
@@ -63,32 +62,3 @@ let compCountry repayment country D C =
         |> fun s -> System.String.Join("\t", s)
     
     printfn "\tLosses:\t%s" losses
-
-let setRowBreakEven (row : DataGridViewRow) repayment D C =
-    let solveInterest = solveInterest repayment
-
-    row.Cells.[0].Value <- box "0% loss"
-
-    let goal = 0.0
-    let values =
-        durations
-        |> List.map (fun N -> solveInterest N D C goal |> formatPerCent)
-
-    values
-    |> Seq.iteri (fun i v ->
-        row.Cells.[1+i].Value <- box v)
-
-let setRowLoss (row : DataGridViewRow) repayment D C =
-    row.Cells.[0].Value <- box "Loss at 0%"
-    
-    let c = convertAnnualToMonthly C
-    let d = computeMonthlyRisk D
-    let losses =
-        durations
-        |> Seq.map (fun N -> payments (repayment N 1.0 0.0) d c)
-        |> Seq.map formatPerCent
-
-    losses
-    |> Seq.iteri (fun i v ->
-        row.Cells.[1+i].Value <- box v)
-        

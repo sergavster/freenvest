@@ -5,12 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{b3a1f387-45c5-4627-a6c4-7a7924f478d2}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>MyC4</RootNamespace>
-    <AssemblyName>MyC4</AssemblyName>
+    <ProjectGuid>{811dd928-8030-43cf-8ca4-14f299a12db5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>GuiWinForms</RootNamespace>
+    <AssemblyName>GuiWinForms</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <Name>MyC4</Name>
+    <Name>GuiWinForms</Name>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,13 +30,6 @@
     <WarningLevel>3</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="GuiWinForms, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
-      <Name>GuiWinForms</Name>
-      <AssemblyName>GuiWinForms.dll</AssemblyName>
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\GuiWinForms\bin\Release\GuiWinForms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="InterestRates, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
       <Name>InterestRates</Name>
       <AssemblyName>InterestRates.dll</AssemblyName>
@@ -59,7 +52,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.fs" />
+    <Compile Include="Plot.fs" />
+    <Compile Include="RatesGridView.fs" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\FSharp\1.0\Microsoft.FSharp.Targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
