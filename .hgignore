@@ -2,3 +2,4 @@ regexp:[.]orig$
 regexp:[.]exe$
 regexp:/obj/
 regexp:/bin/
+regexp:[.]suo$
