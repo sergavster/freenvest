@@ -52,4 +52,14 @@ subdirectories:
   effects on returns,
 - MyC4, an application used to test InterestRates using data relevant to
   lending on the MyC4 platform (www.myc4.com).
+
+* Current status
+
+This software is in early development stages, and is not yet considered usable
+by the general public.
+
+* Contact
+
+The project is hosted on Google code: http://code.google.com/p/freenvest/
+The main (and so far only) auhor is Johann Deneux, email: Johann.Deneux@gmail.com .
   
