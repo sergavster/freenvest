@@ -50,8 +50,8 @@ The directory where this file is located should also contain the following
 subdirectories:
 - InterestRates, contains an F# library to compute interest rates and their
   effects on returns,
-- MyC4, an application used to test InterestRates using data relevant to
-  lending on the MyC4 platform (www.myc4.com).
+- GuiWinForms, GUI components to visualize and edit data, uses Winforms 2.0,
+- Freenvest, the top-level application.
 
 * Current status
 
