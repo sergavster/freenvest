@@ -14,10 +14,29 @@ compCountry Repayment.constant "Eurocard" 0.04 0.0
 [<STAThread>]
 do Application.EnableVisualStyles()
 
-let view = RatesGridView.newGridView()
-view |> RatesGridView.addCountry "Default 4% Deprec. 11.8%" 0.04 0.118 |> ignore
+let viewLoss = RatesGridView.newGridView "Losses at 0%"
+viewLoss
+|> RatesGridView.addRowLoss "Kenya (D 4% C 11.8%)" 0.04 0.118
+|> RatesGridView.addRowLoss "Uganda (D 2.5% C 24%)" 0.025 0.24
+|> RatesGridView.addRowLoss "Tanzania (D 1% C 17%)" 0.01 0.17
+|> ignore
+
+let viewBreakEven = RatesGridView.newGridView "Rates for 0% loss"
+viewBreakEven
+|> RatesGridView.addRowBreakEven "Kenya (D 4% C 11.8%)" 0.04 0.118
+|> RatesGridView.addRowBreakEven "Uganda (D 2.5% C 24%)" 0.025 0.24
+|> RatesGridView.addRowBreakEven "Tanzania (D 1% C 17%)" 0.01 0.17
+|> ignore
 
 let f = new Form()
-f.Controls.Add(view)
+
+let splitter = new SplitContainer()
+splitter.Dock <- DockStyle.Fill
+splitter.Orientation <- Orientation.Horizontal
+
+splitter.Panel1.Controls.Add(viewLoss)
+splitter.Panel2.Controls.Add(viewBreakEven)
+
+f.Controls.Add(splitter)
 
 Application.Run(f)

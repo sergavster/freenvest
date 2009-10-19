@@ -35,7 +35,7 @@ let solveInterest repayment N D C g =
 let formatPerCent x =
     Math.Ceiling(x * 10000.0) / 100.0
 
-let durations = [6;12;15;18;24]
+let durations = [| 6 ; 12 ; 15 ; 18 ; 24 |]
 
 let compCountry repayment country D C =
     let solveInterest = solveInterest repayment
@@ -44,9 +44,9 @@ let compCountry repayment country D C =
     for goal in [0.0; 0.03; 0.04] do
         let values_string =
             durations
-            |> List.map (fun N -> solveInterest N D C goal |> formatPerCent)
-            |> List.map (sprintf "%2.1f")
-            |> Array.of_list
+            |> Seq.map (fun N -> solveInterest N D C goal |> formatPerCent)
+            |> Seq.map (sprintf "%2.1f")
+            |> Array.of_seq
             |> fun s -> System.String.Join("\t", s)
                     
         printfn "\t%2.1f\t%s" (formatPerCent goal) values_string

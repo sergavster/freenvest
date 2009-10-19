@@ -2,24 +2,34 @@
 open InterestFinder
 
 
+let newGridView label =
+    let view = new DataGridView()
+    view.ColumnCount <- 1 + Array.length durations
+    view.Columns.[0].Name <- label
+    
+    durations
+    |> Seq.iteri (fun i d ->
+        view.Columns.[i+1].Name <- sprintf "%d months" d)
+
+    view.Dock <- DockStyle.Fill
+    view.AllowUserToAddRows <- false
+    view
+
+
 let setRowBreakEven repayment D C (row : DataGridViewRow) =
     let solveInterest = solveInterest repayment
-
-    row.Cells.[0].Value <- box "0% loss"
 
     let goal = 0.0
     let values =
         durations
-        |> List.map (fun N -> solveInterest N D C goal |> formatPerCent)
+        |> Seq.map (fun N -> solveInterest N D C goal |> formatPerCent)
 
     values
     |> Seq.iteri (fun i v ->
         row.Cells.[1+i].Value <- box v)
 
-
-let setRowLoss repayment D C (row : DataGridViewRow) =
-    row.Cells.[0].Value <- box "Loss at 0%"
     
+let setRowLoss repayment D C (row : DataGridViewRow) =    
     let c = convertAnnualToMonthly C
     let d = computeMonthlyRisk D
     let losses =
@@ -32,35 +42,17 @@ let setRowLoss repayment D C (row : DataGridViewRow) =
         row.Cells.[1+i].Value <- box v)
 
 
-let setLossAndBreakEvent pos D C (view : DataGridView) =
-    setRowBreakEven Repayment.constant D C (view.Rows.[pos])
-    setRowLoss Repayment.constant D C (view.Rows.[pos+1])
+let addRow init (grid : DataGridView) =
+    let pos = grid.Rows.Add(1)
+    init (grid.Rows.[pos]) |> ignore
+    grid
 
 
-let addCountry label D C (view : DataGridView) =
-    let addRowRO label = 
-        let pos = view.Rows.Add(1)
-        view.Rows.[pos].Cells.[0].Value <- box label
-        view.Rows.[pos].ReadOnly <- true
-        pos
+let addRowBreakEven label D C grid =
+    grid
+    |> addRow (fun row -> row.Cells.[0].Value <- label ; setRowBreakEven Repayment.constant D C row)
 
-    let pos = addRowRO label
-    addRowRO "..." |> ignore
-    addRowRO "..." |> ignore
-    
-    setLossAndBreakEvent (pos + 1) D C view 
-    pos
-    
-    
-let newGridView () =
-    let view = new DataGridView()
-    view.ColumnCount <- 6
-    view.Columns.[0].Name <- ""
-    view.Columns.[1].Name <- "6 months"
-    view.Columns.[2].Name <- "12 months"
-    view.Columns.[3].Name <- "15 months"
-    view.Columns.[4].Name <- "18 months"
-    view.Columns.[5].Name <- "24 months"
-    view.Dock <- DockStyle.Fill
-    view.AllowUserToAddRows <- false
-    view
+
+let addRowLoss label D C grid =
+    grid
+    |> addRow (fun row -> row.Cells.[0].Value <- label ; setRowLoss Repayment.constant D C row)
